@@ -1,5 +1,5 @@
 {
-  "name": "co2ecalculator",
+  "name": "twico2ecalculator",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -14,8 +14,8 @@
     "@react-navigation/native-stack": "^6.9.26",
     "@react-spring/web": "^9.7.3",
     "@reduxjs/toolkit": "^2.2.3",
-    "expo": "^51.0.22",
-    "expo-av": "^14.0.6",
+    "expo": "^50.0.19",
+    "expo-av": "~13.10.6",
     "expo-image-picker": "~14.7.1",
     "expo-linear-gradient": "~12.7.2",
     "expo-print": "~12.8.1",

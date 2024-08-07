@@ -267,7 +267,7 @@ const App = () => {
                     resizeMode="contain"
                   />
                   <Image
-                    source={require("../../assets/images/pureprukriti.png")}
+                    source={require("../../assets/images/pureprakruti.png")}
                     className="w-16 h-16 absolute top-10 left-14"
                   />
                 </View>

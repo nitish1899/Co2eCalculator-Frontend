@@ -8,7 +8,7 @@ export default function App() {
       
         <Image
           className="mt-10"
-          source={require("../assets/images/pureprukriti.png")}
+          source={require("../assets/images/pureprakruti.png")}
           style={{ width: 201, height: 181 }}
         />
       

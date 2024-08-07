@@ -4,10 +4,10 @@
     "slug": "twico2ecalculator",
     "version": "1.0.6",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/pureprakruti.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/pureprukriti.png",
+      "image": "./assets/images/pureprakruti.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,7 +23,7 @@
         "INTERNET"
       ],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/pureprakruti.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.nitishco2e.twico2ecalculator",

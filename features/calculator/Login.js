@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Button, Modal, Image, ActivityIndicator, Alert} from 'react-native';
+import { ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Button, Modal, Image, ActivityIndicator, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Formik, Form, Field } from 'formik';
 import { TextInput } from 'react-native';
@@ -14,19 +14,19 @@ import { loginAsync, selectIsAuthenticated, selectUserInfo, selectUserExist } fr
 
 const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 const signUpSchema = yup.object().shape({
-  
-  
-  mobileNumber:yup
-  .string()
-  .matches(phoneRegex, 'Enter a valid phone number')
-  .required('Phone number is required'),
+
+
+  mobileNumber: yup
+    .string()
+    .matches(phoneRegex, 'Enter a valid phone number')
+    .required('Phone number is required'),
   pin: yup
-  .string()
-  .min(4, 'Length should be 4')
-   .max(4, 'Length should be 4')
-  // .matches(phoneRegex, 'Enter a valid pin number')
-  .required('Pin is required'),
-   
+    .string()
+    .min(4, 'Length should be 4')
+    .max(4, 'Length should be 4')
+    // .matches(phoneRegex, 'Enter a valid pin number')
+    .required('Pin is required'),
+
   // email: yup
   //   .string()
   //   .email("Please enter valid email")
@@ -49,15 +49,15 @@ const App = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
-  const navigation = useNavigation();    
+  const navigation = useNavigation();
   const handleCheckBox = () => {
-          setIsChecked(!isChecked);
+    setIsChecked(!isChecked);
   };
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserInfo);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const userExist = useSelector(selectUserExist);
- 
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
@@ -87,25 +87,26 @@ const App = () => {
 
     // Append other form fields to formData if necessary
     for (const key in values) {
-      
-        if (key === 'pin' || key === 'mobileNumber') {
-          // Convert pin to a number
-          formData.append(key, Number(values[key]));
-        } else {
-          formData.append(key, values[key]);
-        }
-      
+
+      if (key === 'pin' || key === 'mobileNumber') {
+        // Convert pin to a number
+        formData.append(key, Number(values[key]));
+      } else {
+        formData.append(key, values[key]);
+      }
+
     }
     if (isChecked) {
-        console.log(values);
-        // console.log(formData);
-        dispatch(loginAsync(values));
-        // Navigate to the next page
-        if(userInfo){
-        navigation.navigate('Calculator2');}
-      } else {
-        // Do nothing, stay on the same page
+      console.log(values);
+      // console.log(formData);
+      dispatch(loginAsync(values));
+      // Navigate to the next page
+      if (userInfo) {
+        navigation.navigate('Calculator2');
       }
+    } else {
+      // Do nothing, stay on the same page
+    }
 
     // try {
     //   const response = await axios.post('http://192.168.1.8:8000/api/v1/upload', formData, {
@@ -118,74 +119,74 @@ const App = () => {
     //   console.error('Upload error', error);
     // }
   };
-    
-  return(
-  <View className=" h-[100%] ">
-    <ImageBackground source={require("../../assets/images/bg4.jpg")} resizeMode="cover" className="h-[100%] flex items-center">
-      <View className="w-[105%] h-[13%] bg-cyan-200 rounded-b-[100px] flex-row">
-        <Text className="mt-[40px] text-3xl ml-[35%]">Welcome</Text>
-        {/* <TouchableOpacity className="mt-[40px] ml-[60px] flex items-center justify-center h-[40px] w-[40px] bg-white rounded-3xl" >
+
+  return (
+    <View className=" h-[100%] ">
+      <ImageBackground source={require("../../assets/images/bg4.jpg")} resizeMode="cover" className="h-[100%] flex items-center">
+        <View className="w-[105%] h-[13%] bg-cyan-200 rounded-b-[100px] flex-row">
+          <Text className="mt-[40px] text-3xl ml-[35%]">Welcome</Text>
+          {/* <TouchableOpacity className="mt-[40px] ml-[60px] flex items-center justify-center h-[40px] w-[40px] bg-white rounded-3xl" >
         <FontAwesome name="user-o" size={24} color="black" /></TouchableOpacity> */}
-      </View>
+        </View>
 
-     
 
-      {/* <Text className="text-xl mt-2 px-6">Track your carbon footprint </Text>
+
+        {/* <Text className="text-xl mt-2 px-6">Track your carbon footprint </Text>
       <Text className="text-xl px-6">effortlessly with our CO2 emission</Text>
       <Text className="text-xl px-6">calculator. Small steps, big impact!</Text> */}
 
-      <KeyboardAvoidingView className=" h-[70%] w-[100%] mt-8">
-        <ScrollView>
-      <Formik
-     initialValues={{ mobileNumber: null, pin: null  }}
-     validationSchema={signUpSchema}
-     onSubmit={(values)=>{
-      setIsLoading(true);
-        if(true) {
-          console.log(isAuthenticated)
-          console.log(values);
-            dispatch(loginAsync(values));
-          if(isAuthenticated){
-            
-            // api for Login
-            
-            // Navigate to the next page
-            navigation.navigate('Calculator');
-          }
-     }else{
-      setIsLoading(false);
-    }
-    }}
-   >
-     {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, isValid,touched  }) => (
-       <View className="pb-[50px]">
-         <Text className="text-3xl mx-auto font-semibold mb-11">Login</Text>
-    
-         <TextInput className="mx-[12%] my-2 rounded-xl border-2 text-black-200 text-lg font-semibold pl-[90px]"
-           onChangeText={handleChange('mobileNumber')}
-           onBlur={handleBlur('mobileNumber')}
-           value={values.mobileNumber}
-           placeholder='Mobile Number'
-           keyboardType="numeric"
-         />
-          {(errors.mobileNumber && touched.mobileNumber) &&
-                  <Text className="mx-auto" style={{ color: 'red' }}>{errors.mobileNumber}</Text>
-                }
-        
-           <TextInput className="mx-[12%] my-2 rounded-xl border-2 text-black-200 text-lg font-semibold pl-[90px]"
-           onChangeText={handleChange('pin')}
-           onBlur={handleBlur('pin')}
-           value={values.pin}
-           placeholder='Pin'
-           keyboardType="numeric"
-         />
-         {(errors.pin && touched.pin) &&
-                  <Text className="mx-auto" style={{ color: 'red' }}>{errors.pin}</Text>
-                } 
+        <KeyboardAvoidingView className=" h-[70%] w-[100%] mt-8">
+          <ScrollView>
+            <Formik
+              initialValues={{ mobileNumber: null, pin: null }}
+              validationSchema={signUpSchema}
+              onSubmit={(values) => {
+                setIsLoading(true);
+                if (true) {
+                  console.log(isAuthenticated)
+                  console.log(values);
+                  dispatch(loginAsync(values));
+                  if (isAuthenticated) {
 
-      
-          
-        {/* <View className="mx-[65px]  flex-row justify-center">
+                    // api for Login
+
+                    // Navigate to the next page
+                    navigation.navigate('Calculator2');
+                  }
+                } else {
+                  setIsLoading(false);
+                }
+              }}
+            >
+              {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, isValid, touched }) => (
+                <View className="pb-[50px]">
+                  <Text className="text-3xl mx-auto font-semibold mb-11">Login</Text>
+
+                  <TextInput className="mx-[12%] my-2 rounded-xl border-2 text-black-200 text-lg font-semibold pl-[90px]"
+                    onChangeText={handleChange('mobileNumber')}
+                    onBlur={handleBlur('mobileNumber')}
+                    value={values.mobileNumber}
+                    placeholder='Mobile Number'
+                    keyboardType="numeric"
+                  />
+                  {(errors.mobileNumber && touched.mobileNumber) &&
+                    <Text className="mx-auto" style={{ color: 'red' }}>{errors.mobileNumber}</Text>
+                  }
+
+                  <TextInput className="mx-[12%] my-2 rounded-xl border-2 text-black-200 text-lg font-semibold pl-[90px]"
+                    onChangeText={handleChange('pin')}
+                    onBlur={handleBlur('pin')}
+                    value={values.pin}
+                    placeholder='Pin'
+                    keyboardType="numeric"
+                  />
+                  {(errors.pin && touched.pin) &&
+                    <Text className="mx-auto" style={{ color: 'red' }}>{errors.pin}</Text>
+                  }
+
+
+
+                  {/* <View className="mx-[65px]  flex-row justify-center">
          <CheckBox
         title='By checking this box, you agree to our terms and conditions'
         checked={isChecked}
@@ -219,33 +220,33 @@ const App = () => {
       </Modal>
         </View> */}
 
-         <TouchableOpacity onPress={handleSubmit}
-          // disabled={!isValid}
-          >
-         {/* {userExist? null : <Text className="text-red-600">User does not exist</Text>} */}
-         <View className="w-[150px] h-[50px] ml-[130px] rounded-2xl mt-5 bg-blue-900 flex items-center justify-center">
-          
-         {isLoading ? (
+                  <TouchableOpacity onPress={handleSubmit}
+                  // disabled={!isValid}
+                  >
+                    {/* {userExist? null : <Text className="text-red-600">User does not exist</Text>} */}
+                    <View className="w-[150px] h-[50px] ml-[130px] rounded-2xl mt-5 bg-blue-900 flex items-center justify-center">
+
+                      {isLoading ? (
                         <ActivityIndicator size="large" color="#ffffff" />
                       ) : (
                         <Text className="text-white text-2xl">Submit</Text>
                       )}
-         {/* <Text className="text-white text-2xl">Submit</Text> */}
-         </View>
-         </TouchableOpacity>
-       </View>
-     )}
-   </Formik>
-   <TouchableOpacity onPress={()=>navigation.navigate("Signup")} className="flex-row mx-auto"><Text className="  text-xl font-[600]">New User </Text>
-   <Text className="  text-xl text-blue-700 font-[800]"> Signup</Text>
+                      {/* <Text className="text-white text-2xl">Submit</Text> */}
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              )}
+            </Formik>
+            <TouchableOpacity onPress={() => navigation.navigate("Signup")} className="flex-row mx-auto"><Text className="  text-xl font-[600]">New User </Text>
+              <Text className="  text-xl text-blue-700 font-[800]"> Signup</Text>
 
-   
-   </TouchableOpacity>
 
-   
-   </ScrollView>
-      </KeyboardAvoidingView>
-      {/* <View className="flex-1 flex-row items-center justify-center mt-0">
+            </TouchableOpacity>
+
+
+          </ScrollView>
+        </KeyboardAvoidingView>
+        {/* <View className="flex-1 flex-row items-center justify-center mt-0">
         <Text className="text-white">Made in</Text>
         <Image
           className=" ml-2"
@@ -253,34 +254,35 @@ const App = () => {
           style={{ width: 40, height: 22 }}
         />
       </View> */}
-       <View className="flex-1 flex-row space-x-[10%] items-center  mt-0">
-        <View>
-        <Image
-          className="ml-0"
-          source={require("../../assets/images/mantra.jpg")}
-          style={{ width: 50, height: 50 }}
-        />
+        <View className="flex-1 flex-row space-x-[10%] items-center  mt-0">
+          <View>
+            <Image
+              className="ml-0"
+              source={require("../../assets/images/mantra.jpg")}
+              style={{ width: 50, height: 50 }}
+            />
+          </View>
+
+          <View className="flex-row">
+            <Text className="text-white pl-6">Made in</Text>
+            <Image
+              className=" ml-2"
+              source={require("../../assets/images/image 10.png")}
+              style={{ width: 40, height: 22 }}
+            />
+          </View>
+          <View>
+            <Image
+              className=" ml-11"
+              source={require("../../assets/images/make-in-India-logo.jpg")}
+              style={{ width: 80, height: 48 }}
+            />
+          </View>
         </View>
-     
-     <View className="flex-row"> 
-      <Text className="text-white pl-6">Made in</Text>
-        <Image
-          className=" ml-2"
-          source={require("../../assets/images/image 10.png")}
-          style={{ width: 40, height: 22 }}
-        />
-        </View>
-       <View>
-        <Image
-          className=" ml-11"
-          source={require("../../assets/images/make-in-India-logo.jpg")}
-          style={{ width: 80, height: 48 }}
-        />
-        </View>
-      </View>
-    </ImageBackground>
-  </View>
-)};
+      </ImageBackground>
+    </View>
+  )
+};
 
 const styles = StyleSheet.create({
   container: {
